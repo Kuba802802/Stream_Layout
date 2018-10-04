@@ -1,0 +1,140 @@
+<!-- node-sass  ./public/admin/css/SASS/main.scss  ./public/admin/css/main.css -->
+<html>
+<head>
+    <meta charset="utf-8" />  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="../dist/style.css">
+    
+</head>
+<body>
+    <div class="row">
+            <div class="col s12 m6 l2">
+                <div class="card blue-grey darken-3 center-align ">
+                    <div class="card-content white-text">
+                            <div class="card-title">
+                                    Belka Na żywo
+                            </div>
+                            <button class="waves-effect waves-light btn" id="0" data-text="false" data-destText="NULL">On/OFF</button>
+                    </div>  
+                </div>
+            </div>
+            <div class="col s12 m6 l2">
+                    <div class="card blue-grey darken-3 center-align ">
+                        <div class="card-content white-text">
+                                <div class="card-title">
+                                       Zegar I Logo
+                                </div>
+                                <button class="waves-effect waves-light btn" id="1" data-text="false" data-destText="NULL">On/OFF</button>
+                        </div>  
+                    </div>
+            </div>
+            <div class="col s12 m6 l3">
+                    <div class="card blue-grey darken-3 center-align ">
+                        <div class="card-content white-text">
+                                <div class="card-title">
+                                        Belka Lokalizacji 
+                                </div>
+                                <button class="waves-effect waves-light btn" id="2" data-text="false" data-destText="NULL">On/OFF</button>
+                                <button class="waves-effect waves-light btn green lighten-2" id="3" data-text="true" data-destText="locTekst" data-name="lokalizacja">Update</button>
+                                <div class="input-field">
+                                    <input id="loc" type="text" data-destText="locTekst">
+                                    <label for="loc">Wpisz...</label>
+                                </div>
+                        </div>  
+                    </div>
+            </div>
+                <div class="col s12 m6 l3">
+                    <div class="card blue-grey darken-3 center-align ">
+                        <div class="card-content white-text">
+                                <div class="card-title">
+                                        Belka Informacyjna - Główny Tekst
+                                </div>
+                                <button class="waves-effect waves-light btn" id="4" data-text="false" data-destText="NULL">On/OFF</button>
+                                <button class="waves-effect waves-light btn green lighten-2" id="5" data-text="true" data-destText="headLine" data-name="belka">Update HeadLine</button>
+                                <button class="waves-effect waves-light btn green lighten-2" id="6" data-text="true" data-destText="secondLine" data-name="belka">Update SecondLine</button>
+                                    <div class="input-field">
+                                        <label for="secondline">Headline...</label>
+                                        <input id="secondline" type="text" data-destText="headLine">
+                                    </div>
+                                    <div class="input-field">
+                                        <label for="secondline">Secondline..</label>
+                                        <input id="secondline" type="text" data-destText="secondLine">
+                                    </div>
+                                </div>
+                        </div>  
+                    </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col s12 m6 l3">
+                <div class="card blue-grey darken-3 center-align ">
+                    <div class="card-content white-text">
+                            <div class="card-title">
+                                    Nazwa Programu
+                            </div>
+                            <button class="waves-effect waves-light btn" id="7" data-text="false" data-destText="NULL">On/OFF</button>
+                            <button class="waves-effect waves-light btn green lighten-2" id="8" data-text="true" data-destText="program" data-name="program">Update</button>
+                            <div class="input-field">
+                                <input id="program" type="text" data-destText="program">
+                                <label for="program">Wpisz...</label>
+                            </div>
+                    </div>  
+                </div>
+             </div>
+
+             <div class="col s12 m6 l3">
+                    <div class="card blue-grey darken-3 center-align ">
+                        <div class="card-content white-text">
+                                <div class="card-title">
+                                        Ticker(Scroll)
+                                </div>
+                                <button class="waves-effect waves-light btn" id="9" data-text="false" data-destText="NULL">On/OFF</button>
+                                <button class="waves-effect waves-light btn green lighten-2" id="10" data-text="true" data-destText="scroll" data-name="scroll">Update Scroll</button>
+                                <div class="input-field">
+                                    <label for="ticker">Wklej Tekst Scrolla</label>
+                                    <input id="ticker" type="text" data-destText="scroll">
+                                </div>
+                        </div>  
+                    </div>
+             </div>
+
+             <div class="col s12 m6 l3">
+                <div class="card blue-grey darken-3 center-align ">
+                    <div class="card-content white-text">
+                            <div class="card-title">
+                                    Panel z Obrazkiem
+                            </div>
+                            <button class="waves-effect waves-light btn" id="11" data-text="false" data-destText="NULL">On/OFF</button>
+                            <button class="waves-effect waves-light btn green lighten-2" id="12" data-text="true" data-destText="link" data-name="belkaObrazek">Update Obrazek</button>
+                            <button class="waves-effect waves-light btn green lighten-2" id="13" data-text="true" data-destText="podpis" data-name="belkaObrazek">Update Podpis</button>
+                                <div class="input-field">
+                                    <label for="obrazekPodpis">Podpis Obrazka...</label>
+                                    <input id="obrazekPodpis" type="text" data-destText="podpis">
+                                </div>
+                                <div class="input-field">
+                                    <label for="obrazekLink">Link do obrazka....</label>
+                                    <input id="obrazekLink" type="text" data-destText="link">
+                                </div>
+                            </div>
+                    </div>  
+                </div>
+            
+         </div>
+             
+
+        </div>
+           
+          
+
+
+      <script src="../dist/bundle.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+</body>
+</html>

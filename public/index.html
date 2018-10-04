@@ -1,0 +1,218 @@
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.Marquee/1.5.0/jquery.marquee.js"></script>
+    <link rel="stylesheet" href="./css/layout.css">
+</head>
+<body>
+    <div id="state"></div>
+    <div id="container">
+
+        <div class="liveBar"><div id="live">Na Żywo</div></div>
+        <div class="locBar"><div id="loc"></div></div>
+        <div class="headBar"><div class="cover"></div><div id="headLine"></div><div id="secondLine"></div></div>
+        <div class="program"><div id="prog"></div></div>
+        <div class="mainTimer"><img src="./admin/img/logo.png" id="logo"><div class="clock"></div></div>
+        <div class="scroll"></div>
+        <div class="belkaObrazek"><div id="podpisObrazka"></div><img src="" class="img"></div>
+    </div>
+    <script>
+        var socket = io.connect("http://212.91.16.181:8000");
+        setInterval(() => {
+            var d = new Date();
+            var h = d.getHours();
+            var min = d.getMinutes();
+            if(h < 10) h = "0"+h;
+            if(min < 10) min = "0"+min;  
+            document.querySelector('.clock').innerHTML = h + ":" + min;
+        }, 500);
+        
+        function setSignatureComponent(element,value){
+                    if(element && value != null){
+                        document.querySelector(element).innerHTML = value;
+                    }else{
+                        return "Invalid syntax value is null in setSignatureComponent(element,value)";
+                    }
+        }  
+        socket.on("layoutObj",(obj) => {
+            console.log(obj)
+                var timeline = anime.timeline();      
+               switch (obj.constID) {
+                   case 0:
+                    if(obj.enabled == true){
+                        timeline.add({
+                            targets: '#container .liveBar',
+                            left: '0%',
+                            easing: 'easeOutExpo'
+                        }).add({
+                            targets: '#container .liveBar #live',
+                            opacity: 1,
+                            easing: 'easeOutExpo'
+                        }); 
+                        }else{
+                            timeline.add({
+                                targets: '#container .liveBar #live',
+                                opacity: 0,
+                                easing: 'easeOutExpo'
+                                
+                            }).add({
+                                targets: '#container .liveBar',
+                                left: '-20%',
+                                easing: 'easeOutExpo'
+                            });
+                        }
+                       break;
+                    case 1:
+                        if(obj.enabled == true){
+                            timeline.add({
+                                targets: '#container .mainTimer',
+                                left: '10%',
+                                easing: 'easeOutExpo'
+                            });
+                            }else{
+                            timeline.add({
+                                    targets: '#container .mainTimer',
+                                    left: -250,
+                                    easing: 'easeOutExpo'
+                                    
+                                });
+                        }
+                    break;
+                    case 2:
+
+                        if(obj.enabled == true){
+                        setSignatureComponent("#loc",obj.locTekst);
+                        timeline.add({
+                            targets: '#container .locBar',
+                            left: '25%',
+                            easing: 'easeOutExpo'
+                            
+                        }).add({
+                            targets: '#container .locBar #loc',
+                            opacity: 1,
+                            easing: 'easeOutExpo'
+                        });
+                        } else{
+                            timeline.add({
+                                targets: '#container .locBar #loc',
+                                opacity: 0,
+                                easing: 'easeOutExpo'
+                            }).add({
+                                targets: '#container .locBar',
+                                left: '-200',
+                                easing: 'easeOutExpo'
+                                
+                            });
+                        }
+                        
+                    break;
+                    case 3:
+                        if(obj.enabled == true){
+                            setSignatureComponent("#headLine",obj.headLine);
+                            setSignatureComponent("#secondLine",obj.secondLine);
+                                timeline.add({
+                                    targets: '#container .headBar',
+                                    scaleY: 1,
+                                    easing: 'easeOutExpo'
+                                    
+                                }).add({
+                                    targets: '#container .cover',
+                                    left: '150%',
+                                    easing: 'easeOutExpo'
+                                });
+                        }else{
+                            timeline.add({
+                                targets: '#container .cover',
+                                left: '0%',
+                                easing: 'easeOutExpo'
+                                
+                            }).add({
+                                targets: '#container .headBar',
+                                scaleY: 0,
+                                easing: 'easeOutExpo'
+                            });
+                        }
+                    break;
+                    case 4:
+                    if(obj.enabled == true){
+                        setSignatureComponent("#prog",obj.program);
+                        timeline.add({
+                            targets: '#container .program',
+                            left: '10%',
+                            easing: 'easeOutExpo'
+                            
+                        }).add({
+                            targets: '#container .program .prog',
+                            opacity: 1,
+                            easing: 'easeOutExpo'
+                        });
+                    }else{
+                    timeline.add({
+                            targets: '#container .program .prog',
+                            opacity: 0,
+                            easing: 'easeOutExpo'
+                            
+                            
+                        }).add({
+                            targets: '#container .program',
+                            left: -250,
+                            easing: 'easeOutExpo'
+                        });
+                    }
+                    break;
+                    case 5:
+                        setSignatureComponent(".scroll",obj.scroll);
+                            if(obj.enabled == true){
+                                setTimeout(() => $('.scroll').marquee({
+                                    duration: 10000,
+                                    gap: -1000
+                                }),500);
+                                timeline.add({
+                                        targets: '#container .scroll',
+                                        left: '50%',
+                                        easing: 'easeOutExpo' 
+                                });
+                                //setTimeout(() => document.querySelector(".scroll").style.display = "block",500);
+                            }else{
+                                //setTimeout(() => document.querySelector(".scroll").style.display = "none",100);
+                                timeline.add({
+                                        targets: '#container .scroll',
+                                        left: -1500,
+                                        easing: 'easeOutExpo'
+                                });
+                            }
+                    break;
+                    case 6: 
+                    setSignatureComponent("#podpisObrazka",obj.podpis);
+                    document.querySelector(".img").setAttribute("src",obj.link);
+                        if(obj.enabled == true){
+                            timeline.add({
+                                targets: '#container .belkaObrazek',
+                                left: '85%',
+                                easing: 'easeOutExpo'
+                            });
+                        }else{
+                            timeline.add({
+                                    targets: '#container .belkaObrazek',
+                                    left: '+=1000',
+                                    easing: 'easeOutExpo'
+                            });
+                        }
+                    break;
+                   default:
+                        break;
+               }
+            });
+
+        
+    </script>
+</body>
+</html>
